@@ -1,0 +1,67 @@
+<section ng-controller="PostsController" ng-init="findOne()">
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<p><img ng-show="post.aws" ng-src="{{post.aws}}"></p>
+
+				<h1 ng-bind="post.title"></h1>
+
+				<small class="text-info">
+					<em>Posted on</em>
+					<em ng-bind="post.created | date:'mediumDate'"></em>
+					<em>by</em>
+					<em ng-bind="post.creator.username"></em>
+				</small>
+				<p ng-bind="post.content"></p>
+
+				<div ng-show="authentication.user._id == post.creator._id">
+					<a class="btn btn-primary btn-sm" href="/#!/posts/{{post._id}}/edit">edit</a>
+					<a class="btn btn-danger btn-sm" href="#" ng-click="delete();">delete</a>
+				</div>
+
+			</div><!-- / col-lg-12 -->
+		</div><!-- / row -->
+	</div><!-- / container -->
+
+	<section ng-controller="CommentsController" ng-init="find()">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+					<h3>Comments</h3>
+
+					<div class="create-comment">
+						<form ng-submit="create()" novalidate>
+
+							<div class="alert alert-danger" data-ng-show="error">
+								<span ng-bind="error"></span>
+							</div>
+
+							<div class="form-group">
+								<textarea class="form-control input-md" rows="3" id="content" ng-model="comment.content" placeholder="Your comment">
+								</textarea>
+							</div>
+
+							<div class="form-group">
+								<input class="btn btn-primary btn-md" type="submit" value="Submit">
+							</div>
+
+						</form>
+					</div><!-- / create-comment -->
+
+				</div><!-- / col-lg-12 -->
+
+				<div class="col-lg-12" ng-repeat="comment in comments">
+					<strong ng-bind="comment.userId.username"></strong>
+					<h5 class="comment-date" ng-bind="comment.created | date:'mediumDate'"></h5>
+					<div ng-bind="comment.content"></div>
+
+					<hr />
+				</div>
+
+			</div><!-- / row -->
+		</div><!-- / container -->
+	</section>
+
+</section>
+

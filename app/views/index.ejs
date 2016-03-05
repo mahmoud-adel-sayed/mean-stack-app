@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= title %></title>
+	<link rel="stylesheet" type="text/css" href="css/style.min.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+
+<body>
+	<div class="left-content" ng-controller="UsersController">
+		<h4 class="text-center" ng-bind="authentication.user.username"></h4>
+		<div class="thumb"><img src="/img/about.png"></div>
+
+		<ul class="left-menu">
+			<li><a href="/#!/">List Posts</a></li>
+			<li><a href="/#!/posts/create">Create Post</a></li>
+			<li><a href="/#!/profile">My profile</a></li>
+			<li><a href="/#!/profile/edit/password">Change password</a></li>
+
+			<li><a class="text-info" href="/signout">Sign out</a></li>
+		</ul>
+	</div>
+
+	<div class="main-content" ng-view></div>
+
+	<script type="text/javascript">
+		window.user = <%- user || 'null' %>;
+	</script>
+
+	<script type="text/javascript" src="/lib/angular/angular.js"></script>
+	<script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
+	<script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
+
+	<script type="text/javascript" src="bundle.min.js"></script>
+</body>
+</html>

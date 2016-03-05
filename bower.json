@@ -1,0 +1,23 @@
+{
+  "name": "mean",
+  "description": "this is a mean app",
+  "main": "server.js",
+  "authors": [
+    "mahmoud adel"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular-resource": "~1.4.8"
+  }
+}

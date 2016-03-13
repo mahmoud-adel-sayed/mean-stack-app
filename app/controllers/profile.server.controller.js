@@ -10,7 +10,7 @@ exports.editProfile = function(req , res){
 		req.body.aws = 'https://s3.amazonaws.com/mahmoudadel/'+req.file.filename;
 		AWS.onFileUploadData(req.file.filename , req.file.path , req.file.mimetype);
 	}
-
+	
 	var profile = req.body;
 
 	User.findOneAndUpdate({_id: userId} , profile , { new: true , runValidators: true } , function(err , profile){

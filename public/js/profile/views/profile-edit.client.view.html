@@ -34,9 +34,16 @@
 							</div><!-- /form-group -->
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="username">Email: </label>
+								<label class="col-sm-2 control-label" for="Email">Email: </label>
 								<div class="col-sm-7">
 									<input class="form-control input-md" id="Email" type="text" placeholder="Email" ng-model="profile.email" />
+								</div>
+							</div><!-- /form-group -->
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="image">Upload your image </label>
+								<div class="col-sm-7">
+									<input class="form-control input-md" id="image" type="file" file-model="profile.image" />
 								</div>
 							</div><!-- /form-group -->
 
@@ -54,5 +61,5 @@
 			</div><!-- /col-lg-12 -->
 		</div><!-- /row -->
 	</div><!-- /container-fluid -->
-	
+
 </section>

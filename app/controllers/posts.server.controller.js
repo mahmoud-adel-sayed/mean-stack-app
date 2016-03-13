@@ -74,16 +74,16 @@ exports.update = function(req , res){
 };
 
 exports.delete = function(req , res){
-	var post = req.post;
-	var image = req.post.image;
+	var post = req.post,
+			image = req.post.image,
+			aws = req.post.aws;
 
 	post.remove(function(err , post){
 		if(err){
 			return res.status(400).send({ message: getErrorMessage(err) });
 		}else{
-			if(image){
-				del.sync('public/uploads/'+ image);
-			}
+			if(image) del.sync('public/uploads/'+ image);
+			if(aws) AWS.onFileDelete('mahmoudadel' , image);
 			res.json(post);
 		}
 	});

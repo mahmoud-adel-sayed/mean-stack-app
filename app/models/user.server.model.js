@@ -32,6 +32,13 @@ var UserSchema = new Schema({
 	created: {
 		type: Date,
 		default: Date.now
+	},
+	image: {
+		type: String,
+		default: 'about.png'
+	},
+	aws:{
+		type: String
 	}
 });
 

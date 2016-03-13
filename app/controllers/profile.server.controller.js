@@ -1,42 +1,29 @@
-var User = require('mongoose').model('User');
-
-var getErrorMessage = function(err){
-	var message = '';
-	if(err.code){
-		switch (err.code) {
-			case 11000:
-			case 11001:
-				message = 'Username already exists';
-			break;
-			default:
-				message = 'Something went wrong';
-		}
-	}else{
-		for(var errName in err.errors){
-			if (err.errors[errName].message) message = err.errors[errName].message;
-		}
-	}
-	return message;
-};
+var User = require('mongoose').model('User'),
+		getErrorMessage = require('./error.server.controller'),
+		AWS = require('../../config/aws');
 
 exports.editProfile = function(req , res){
 	var userId = req.user._id;
+
+	if(req.file){
+		req.body.image = req.file.filename;
+		req.body.aws = 'https://s3.amazonaws.com/mahmoudadel/'+req.file.filename;
+		AWS.onFileUploadData(req.file.filename , req.file.path , req.file.mimetype);
+	}
+
 	var profile = req.body;
 
 	User.findOneAndUpdate({_id: userId} , profile , { new: true , runValidators: true } , function(err , profile){
-		if(err){
-			return res.status(400).send({ message: getErrorMessage(err) });
-		}else{
-			res.json(profile);
-		}
+		if(err) return res.status(400).send({ message: getErrorMessage(err) });
+		res.json(profile);
 	});
 };
 
 exports.changePassword = function(req , res){
-	var userId = req.user._id;
-	var oldPassword = req.body.oldPass;
-	var newPassword = req.body.newPass;
-	var confirmPassword = req.body.confirmPass;
+	var userId = req.user._id,
+			oldPassword = req.body.oldPass,
+			newPassword = req.body.newPass,
+			confirmPassword = req.body.confirmPass;
 
 	if(!oldPassword){
 		return res.status(400).send({ message: 'Please enter your old password' });
@@ -51,12 +38,9 @@ exports.changePassword = function(req , res){
 			}else{
 				user.password = newPassword;
 				user.save(function(err , newuser){
-					if(err){
-						return res.status(400).send({ message: getErrorMessage(err) });
-					}else{
-						req.logout();
-						res.status(200).end();
-					}
+					if(err) return res.status(400).send({ message: getErrorMessage(err) });
+					req.logout();
+					res.status(200).end();
 				});
 			}
 		});

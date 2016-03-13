@@ -1,4 +1,4 @@
-angular.module("profile").controller("EditprofileController" , ["$scope" , "$http" , "$location" , "Authentication" , function($scope , $http , $location , Authentication){
+angular.module("profile").controller("EditprofileController" , ["$scope" , "$http" , "$window" , "Authentication" , function($scope , $http , $window , Authentication){
 
 	$scope.profile = {
 		username: Authentication.user.username,
@@ -8,11 +8,22 @@ angular.module("profile").controller("EditprofileController" , ["$scope" , "$htt
 	};
 
 	$scope.editProfile = function(){
-		$http.put('/api/users/profile/edit' , $scope.profile).success(function(response){
-			$location.path('profile');
-		}).error(function(err){
-			$scope.error = err.message;
-		});
+		var data = $scope.profile;
+		var fd = new FormData();
+
+    for(var key in data)
+    	fd.append(key , data[key]);
+
+      $http.put('/api/users/profile/edit', fd, {
+        transformRequest: angular.identity,
+        headers: {'Content-Type': undefined}
+      })
+      .success(function(response){
+      	$window.location.href = '/';
+      })
+      .error(function(errorResponse){
+      	$scope.error = errorResponse.message;
+      });
 	};
 
 }]);

@@ -1,12 +1,12 @@
 {
   "name": "mean",
-  "version": "0.0.1",
-  "description": "this is a mean app",
+  "version": "1.0.0",
+  "description": "this is a simple mean app",
   "main": "server.js",
   "scripts": {
     "start": "node ./server.js"
   },
-  "author": "mahmoud adel",
+  "author": "Mahmoud Adel",
   "dependencies": {
     "express": "~4.13.3",
     "morgan": "~1.6.1",
@@ -39,5 +39,11 @@
     "grunt-contrib-cssmin": "~0.14.0",
     "grunt-contrib-uglify": "~0.11.0",
     "grunt-contrib-concat": "~0.5.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mahmoud-adel-sayed/mean-stack-app.git"
+  },
+  "keywords": ["mean" , "mean stack" , "mean app" , "mean sample" , "mongodb" , "express" , "angular" , "node"],
+  "license": "MIT"
 }

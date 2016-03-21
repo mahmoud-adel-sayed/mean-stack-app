@@ -1,9 +1,9 @@
 var AWS = require('aws-sdk');
-	fs = require('fs');
+		fs = require('fs');
 
 // put here your credentionals
-var accessKeyId =  process.env.AWS_ACCESS_KEY;
-var secretAccessKey = process.env.AWS_SECRET_KEY;
+var accessKeyId =  process.env.AWS_ACCESS_KEY,
+		secretAccessKey = process.env.AWS_SECRET_KEY;
 
 AWS.config.update({
     accessKeyId: accessKeyId,
@@ -16,7 +16,7 @@ exports.onFileUploadData = function (filename, path , type){
 	fs.readFile(path, function(err, data){
 		if (err){
 			console.log(err);
-		} 
+		}
 		var params = {
 			Bucket: 'mahmoudadel',
 			Key: filename,
@@ -31,5 +31,16 @@ exports.onFileUploadData = function (filename, path , type){
 			    console.log("Successfully uploaded data to Bucket/Key");
 			}
 		});
+	});
+};
+
+exports.onFileDelete = function(bucket , filename){
+	var params = {
+		Bucket: bucket,
+		Key: filename
+	}
+	s3.deleteObject(params , function(err , data){
+		if(err) console.log(err);
+		else console.log(data)
 	});
 };

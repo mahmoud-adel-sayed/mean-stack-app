@@ -1,24 +1,6 @@
 var User = require('mongoose').model('User'),
-	passport = require('passport');
-
-var getErrorMessage = function(err){
-	var message = '';
-	if(err.code){
-		switch (err.code) {
-			case 11000:
-			case 11001:
-				message = 'Username already exists';
-			break;
-			default:
-				message = 'Something went wrong';
-		}
-	}else{
-		for(var errName in err.errors){
-			if (err.errors[errName].message) message = err.errors[errName].message;
-		}
-	}
-	return message;
-};
+		passport = require('passport'),
+		getErrorMessage = require('./error.server.controller');
 
 exports.renderSignup = function(req , res , next){
 	if(!req.user){
@@ -67,7 +49,7 @@ exports.signup = function(req , res , next){
 				if(err){
 					return next(err);
 				}
-				return res.redirect('/'); 
+				return res.redirect('/');
 			});
 		});
 	}else{

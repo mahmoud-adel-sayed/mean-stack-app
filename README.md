@@ -4,7 +4,7 @@ this is a mean (MongoDB , Express , Angular , NodeJS) application sample.
 ### App demo
 This is the link to the app demo hosted on heroku [mahmoud-adel.herokuapp.com](http://mahmoud-adel.herokuapp.com/).
 
-### Installion
+### Installation
 1. You have to install [NodeJs](https://nodejs.org) first.
 2. You have to install [MongoDB](https://www.mongodb.com/).
 3. then download or clone the app.

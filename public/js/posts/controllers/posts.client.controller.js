@@ -1,10 +1,12 @@
 angular.module("posts").controller("PostsController", ["$scope" , "$routeParams" , "$location" , "Posts" , "Authentication" , "$http" , function($scope , $routeParams , $location , Posts , Authentication , $http){
-	
+
 	$scope.authentication = Authentication;
 	$scope.post = {};
 	$scope.loading = true;
+	$scope.loading2 = false;
 
 	$scope.create = function(){
+		$scope.loading2 = true;
 
 		var uploadUrl = "/api/posts";
 		var data = $scope.post;
@@ -13,7 +15,7 @@ angular.module("posts").controller("PostsController", ["$scope" , "$routeParams"
 
         for(var key in data)
         	fd.append(key , data[key]);
-        
+
         $http.post(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
@@ -23,9 +25,9 @@ angular.module("posts").controller("PostsController", ["$scope" , "$routeParams"
         })
         .error(function(errorResponse){
         	$scope.error = errorResponse.message;
+					$scope.loading2 = false;
         });
-
-	}
+	};
 
 	$scope.find = function(){
 		$scope.posts = Posts.query(function(){

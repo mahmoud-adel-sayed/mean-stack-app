@@ -36,17 +36,20 @@ angular.module("posts").config(["$routeProvider" , function($routeProvider){
 		});
 }]);
 angular.module("posts").controller("CommentsController" , ["$scope" , "$routeParams" , "Comments" , function($scope , $routeParams , Comments){
-	
+
 	$scope.comment = {};
+	$scope.loading = false;
 
 	$scope.create = function(){
 		var comment = new Comments({
 			content: $scope.comment.content
 		});
 
-		comment.$save({postId: $routeParams.postId}, 
+		comment.$save({postId: $routeParams.postId},
 			function(respond){
-				$scope.comment = {};
+				$scope.comment = {} , $scope.error = false;
+				
+				$scope.find();
 				$scope.comments.splice(0, 0, respond);
 			},
 			function(errorResponse){
@@ -55,18 +58,23 @@ angular.module("posts").controller("CommentsController" , ["$scope" , "$routePar
 	};
 
 	$scope.find = function(){
-		$scope.comments = Comments.query({
-			postId: $routeParams.postId
+		$scope.loading = true;
+		var comments = Comments.query({ postId: $routeParams.postId } , function(){
+			$scope.comments = comments;
+			$scope.loading = false;
 		});
 	};
 }]);
+
 angular.module("posts").controller("PostsController", ["$scope" , "$routeParams" , "$location" , "Posts" , "Authentication" , "$http" , function($scope , $routeParams , $location , Posts , Authentication , $http){
-	
+
 	$scope.authentication = Authentication;
 	$scope.post = {};
 	$scope.loading = true;
+	$scope.loading2 = false;
 
 	$scope.create = function(){
+		$scope.loading2 = true;
 
 		var uploadUrl = "/api/posts";
 		var data = $scope.post;
@@ -75,7 +83,7 @@ angular.module("posts").controller("PostsController", ["$scope" , "$routeParams"
 
         for(var key in data)
         	fd.append(key , data[key]);
-        
+
         $http.post(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
@@ -85,9 +93,9 @@ angular.module("posts").controller("PostsController", ["$scope" , "$routeParams"
         })
         .error(function(errorResponse){
         	$scope.error = errorResponse.message;
+					$scope.loading2 = false;
         });
-
-	}
+	};
 
 	$scope.find = function(){
 		$scope.posts = Posts.query(function(){
@@ -126,6 +134,7 @@ angular.module("posts").controller("PostsController", ["$scope" , "$routeParams"
 	}
 
 }]);
+
 angular.module("posts").directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',

@@ -2,20 +2,26 @@ angular.module("posts").controller("CommentsController" , ["$scope" , "$routePar
 
 	$scope.comment = {};
 	$scope.loading = false;
+	$scope.loading2 = false;
 
 	$scope.create = function(){
+		$scope.loading2 = true;
+
 		var comment = new Comments({
 			content: $scope.comment.content
 		});
 
 		comment.$save({postId: $routeParams.postId},
 			function(respond){
-				$scope.comment = {} , $scope.error = false;
-				
+				$scope.comment = {};
+				$scope.loading2 = false;
+				$scope.error  = false;
+
 				$scope.find();
 				$scope.comments.splice(0, 0, respond);
 			},
 			function(errorResponse){
+				$scope.loading2 = false;
 				$scope.error = errorResponse.data.message;
 		});
 	};

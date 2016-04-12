@@ -25,7 +25,7 @@ angular.module("posts").controller("PostsController", ["$scope" , "$routeParams"
         })
         .error(function(errorResponse){
         	$scope.error = errorResponse.message;
-					$scope.loading2 = false;
+			$scope.loading2 = false;
         });
 	};
 
